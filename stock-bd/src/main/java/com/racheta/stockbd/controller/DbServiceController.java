@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/db")
+@CrossOrigin
 public class DbServiceController {
     @Autowired
     private QuotesRepository quotesRepository;
