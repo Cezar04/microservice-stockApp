@@ -3,6 +3,7 @@ package com.racheta.stockservice.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -19,7 +20,7 @@ import yahoofinance.quotes.stock.StockQuote;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,6 +48,17 @@ public class StockController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/top10")
+    public Map<String, BigDecimal> topTenQuotes(){
+        List<String> quotesList = getTenQuotes();
+        Map<String, BigDecimal> result = new HashMap<>();
+
+        for(String item : quotesList){
+            result.put(item, getStockPrice(item).getQuote().getPrice());
+        }
+        return result;
+    }
+
     private Stock getStockPrice(String quote) {
         try {
             return YahooFinance.get(quote);
@@ -61,6 +73,11 @@ public class StockController {
     private class Quote {
         private String quote;
         private BigDecimal price;
+
+    }
+
+    private List<String> getTenQuotes(){
+        return Arrays.asList("AAPL" , "AMD" ,"GE", "MVIS", "GSAT", "NIO", "SNAP", "TSLA", "SKLZ", "F");
 
     }
 

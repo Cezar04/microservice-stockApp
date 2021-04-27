@@ -24,6 +24,8 @@ public class DbServiceController {
         return getQuotesByUserName(username);
     }
 
+
+
     @PostMapping("/add")
     public List<String> add(@RequestBody final Quotes quotes) {
 
@@ -35,16 +37,24 @@ public class DbServiceController {
     }
 
 
-//    aici e ceva dubiosl
 
-//    @PostMapping("/delete/{username}")
-//    public List<String> delete(@PathVariable("username") final String username) {
-//
-//        List<Quote> quotes = quotesRepository.findByUserName(username);
-//        quotesRepository.delete(quotes);
-//
-//        return getQuotesByUserName(username);
-//    }
+
+    @PostMapping("/delete/{username}")
+    public List<String> delete(@PathVariable("username") final String username) {
+
+        List<Quote> quotes = quotesRepository.findByUserName(username);
+        quotes.forEach(quote -> quotesRepository.delete(quote));
+
+        return getQuotesFromList(quotes);
+    }
+
+    @PostMapping("/delete/{username}/{quote}")
+    public String deleteQuoteByUsername(@PathVariable("username") final String username, @PathVariable("quote") final String quote){
+
+        Quote quotes = quotesRepository.findByUserNameAndQuote(username, quote);
+        quotesRepository.delete(quotes);
+        return quotes.getQuote();
+    }
 
 
     private List<String> getQuotesByUserName(@PathVariable("username") String username) {
@@ -54,6 +64,13 @@ public class DbServiceController {
                 .collect(Collectors.toList());
     }
 
+
+    private List<String> getQuotesFromList(List<Quote> quoteList){
+        return quoteList
+                .stream()
+                .map(Quote::getQuote)
+                .collect(Collectors.toList());
+    }
 
 
 
