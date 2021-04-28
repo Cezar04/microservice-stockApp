@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -24,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/rest/stock")
 public class StockController {
 
@@ -39,6 +37,7 @@ public class StockController {
 
 
         List<String> quotes = quoteResponse.getBody();
+        System.out.println(quotes);
         return quotes
                 .stream()
                 .map(quote -> {

@@ -7,6 +7,8 @@ import com.racheta.stockbd.repository.QuotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +31,7 @@ public class DbServiceController {
 
     @PostMapping("/add")
     public List<String> add(@RequestBody final Quotes quotes) {
-
+        quotes.setQuotes(new ArrayList<String>(Arrays.asList(quotes.getQuotes().get(0).split(", "))));
         quotes.getQuotes()
                 .stream()
                 .map(quote -> new Quote(quotes.getUserName(), quote))
