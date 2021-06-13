@@ -2,8 +2,8 @@ package com.racheta.stockbd.controller;
 
 
 import com.racheta.stockbd.model.Quote;
-import com.racheta.stockbd.model.Quotes;
-import com.racheta.stockbd.repository.QuotesRepository;
+import com.racheta.stockbd.model.*;
+import com.racheta.stockbd.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
